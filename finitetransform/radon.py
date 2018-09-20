@@ -261,15 +261,19 @@ def getSliceCoordinates2(m, data, center=False, p=2):
             x = (k+offset)%rows
             index = (rows-(k*m)%rows + offset)%rows
 #            print "k:",k,"\tindex:",index
+            #print("x:", x)
+            #print("index:", index)
             v.append(x)
             u.append(index)
     else: #perp slice, assume dyadic
         s = m-cols #consistent notation
-#        print "s:",s
+        print "s:",s
         for k, row in enumerate(data): #iterate per row
             x = (k+offset)%cols
             index = (cols-(k*p*s)%cols + offset)%cols
 #            print "k:",k,"\tindex:",index
+            #print("x:", x)
+            #print("index:", index)
             u.append(x)
             v.append(index)
 
