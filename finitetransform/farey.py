@@ -94,6 +94,7 @@ def toFinite(fareyVector, N):
     Return the finite vector corresponding to the Farey vector provided for a given modulus/length N
     and the multiplicative inverse of the relevant Farey angle
     '''
+    
     p, q = get_pq(fareyVector)
     coprime = nt.is_coprime(abs(q), N)
     qNeg = q #important, if q < 0, preserve for minverse.
@@ -104,6 +105,7 @@ def toFinite(fareyVector, N):
 #    print("p:", p, "q:", q)
 
     mValue = 0
+    sValue = 0
     inv = 1
     if coprime:
         inv = nt.minverse(qNeg, N)
@@ -112,10 +114,13 @@ def toFinite(fareyVector, N):
 #        print "vec:", fareyVector, "m:", mValue, "inv:", inv, "I:", identity
     else: #perp projection
         inv = nt.minverse(p, N)
-        mValue = (q*inv)%N + N 
+        inv2 = nt.minverse(2, N)
+        sValue = int((q*inv)%N/2)
+        #mValue = ((q*inv)%N)/2 + N
 #        print "perp vec:", fareyVector, "m:", mValue, "inv:", inv
 
-    return mValue, inv
+    return mValue, sValue, p, q, inv
+    #return mValue, p, q, inv
     
 def finiteTranslateOffset(fareyVector, N, P, Q):
     '''
@@ -186,7 +191,7 @@ class Farey:
         
         return farey(p3, q3)
         
-    def generate(self, n, octants=1):
+    def generate(self, n, octants=1): #here
         '''
         Generate all the Farey vectors up to given n.
         Octants is the number of octants to produce, 1 is the first octant, 2 is the first two octants, 4 is first two quadrants and > 4 is all quadrants
@@ -206,7 +211,7 @@ class Farey:
                 nextAngle = self.nextFarey(n, angle1, angle2)
 
             self.vectors.append(nextAngle)
-#            print nextAngle
+            #print nextAngle
             angle1 = angle2
             angle2 = nextAngle
             

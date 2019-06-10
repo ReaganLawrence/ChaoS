@@ -71,6 +71,8 @@ def isKatzCriterion(P, Q, angles, K = 1):
         p, q = farey.get_pq(angles[j])
         sumOfP += abs(p)
         sumOfQ += abs(q)
+
+    #print sumOfP
         
 #    if max(sumOfP, sumOfQ) > max(rows, cols):
     if sumOfP > K*P or sumOfQ > K*Q:
@@ -374,7 +376,7 @@ def angleSet_Symmetric(P, Q, octant=0, binLengths=False, K = 1):
     maxPQ = max(P,Q)
 
     fareyVectors.compactOff()
-    fareyVectors.generate(maxPQ-1, 1)
+    fareyVectors.generate(maxPQ-1, 1) #here
     vectors = fareyVectors.vectors
     sortedVectors = sorted(vectors, key=lambda x: x.real**2+x.imag**2) #sort by L2 magnitude
     
